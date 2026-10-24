@@ -9,6 +9,12 @@ export const CONFIG = {
   DATA_MODE: "dummy",
   DUMMY_DATA_URL: "data/dummy-shops.json",
 
+  // Supabase の接続先。ここに書いてよいのは Project URL と publishable キー（sb_publishable_...）だけ。
+  // secret キー（sb_secret_...）や service_role キーは絶対に書かない。
+  // 開発用（localhost で開いたとき）と本番用を分けられる。本番用が空のうちは開発用と同じものを使う。
+  SUPABASE_DEV: { url: "", key: "" },
+  SUPABASE_PROD: { url: "", key: "" },
+
   // 地図の初期表示（東京駅付近）
   MAP_CENTER: [35.6812, 139.7671],
   MAP_ZOOM: 12,

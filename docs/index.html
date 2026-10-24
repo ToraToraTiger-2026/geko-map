@@ -6,7 +6,7 @@
   <!-- OSMのタイル利用条件でRefererの送信が必要なため、Referrer-Policyを絞りすぎない -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <!-- 読み込みを許可する場所の制限（CSP）。タイル配信元を変えたら img-src も合わせて変更すること -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://*.supabase.co; base-uri 'none'; form-action 'none'">
   <title>下戸マップ</title>
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="css/style.css">
@@ -31,6 +31,7 @@
   </footer>
 
   <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="vendor/supabase-js/supabase.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
