@@ -1,0 +1,12 @@
+# 秘密情報（絶対にコミットしない）
+.env
+.env.*
+*.key
+*.pem
+secrets/
+# 管理者登録用など、個人のIDを含むSQL
+supabase/local_*.sql
+# OS・エディタ
+.DS_Store
+Thumbs.db
+node_modules/
