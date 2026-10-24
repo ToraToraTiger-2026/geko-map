@@ -1,0 +1,40 @@
+{
+  "note": "動作確認用のダミーデータです。店名・住所・内容はすべて架空です。",
+  "shops": [
+    {
+      "id": "dummy-1", "name": "ダミー茶房 東京駅前", "address": "東京都千代田区丸の内（ダミー）",
+      "lat": 35.6815, "lng": 139.7640, "place_id": null, "region": "tokyo",
+      "features": { "non_alcohol_rich": 8, "comfortable_sober": 5, "food_rich": 6, "tea_coffee": 7, "solo_friendly": 4 }
+    },
+    {
+      "id": "dummy-2", "name": "ダミー食堂 渋谷", "address": "東京都渋谷区道玄坂（ダミー）",
+      "lat": 35.6591, "lng": 139.6985, "place_id": null, "region": "tokyo",
+      "features": { "food_rich": 9, "no_one_order": 6, "private_room": 3, "comfortable_sober": 4 }
+    },
+    {
+      "id": "dummy-3", "name": "ダミー個室ダイニング 新宿", "address": "東京都新宿区西新宿（ダミー）",
+      "lat": 35.6896, "lng": 139.6917, "place_id": null, "region": "tokyo",
+      "features": { "private_room": 10, "non_alcohol_rich": 5, "no_drink_pressure": 4, "no_one_order": 3 }
+    },
+    {
+      "id": "dummy-4", "name": "ダミーカフェバー 池袋", "address": "東京都豊島区南池袋（ダミー）",
+      "lat": 35.7295, "lng": 139.7109, "place_id": null, "region": "tokyo",
+      "features": { "non_alcohol_rich": 12, "tea_coffee": 8, "solo_friendly": 7, "comfortable_sober": 9 }
+    },
+    {
+      "id": "dummy-5", "name": "ダミー定食屋 上野", "address": "東京都台東区上野（ダミー）",
+      "lat": 35.7141, "lng": 139.7774, "place_id": null, "region": "tokyo",
+      "features": { "food_rich": 11, "solo_friendly": 10, "no_one_order": 8, "no_drink_pressure": 6 }
+    },
+    {
+      "id": "dummy-6", "name": "ダミー居酒屋 品川", "address": "東京都港区高輪（ダミー）",
+      "lat": 35.6284, "lng": 139.7387, "place_id": null, "region": "tokyo",
+      "features": { "non_alcohol_rich": 6, "food_rich": 7, "private_room": 5, "no_drink_pressure": 2 }
+    },
+    {
+      "id": "dummy-7", "name": "ダミー喫茶 吉祥寺", "address": "東京都武蔵野市吉祥寺本町（ダミー）",
+      "lat": 35.7030, "lng": 139.5797, "place_id": null, "region": "tokyo",
+      "features": { "tea_coffee": 9, "comfortable_sober": 7, "solo_friendly": 8, "non_alcohol_rich": 3 }
+    }
+  ]
+}
