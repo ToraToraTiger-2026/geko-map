@@ -6,13 +6,13 @@ export const CONFIG = {
   OPERATOR_NAME: "運営者（ハンドル名・未定）", // 仮の表記
 
   // データの読み込み方: "dummy"（ダミーJSON） | "supabase" | "json"（書き出し済みJSON）
-  DATA_MODE: "dummy",
+  DATA_MODE: "supabase",
   DUMMY_DATA_URL: "data/dummy-shops.json",
 
   // Supabase の接続先。ここに書いてよいのは Project URL と publishable キー（sb_publishable_...）だけ。
   // secret キー（sb_secret_...）や service_role キーは絶対に書かない。
   // 開発用（localhost で開いたとき）と本番用を分けられる。本番用が空のうちは開発用と同じものを使う。
-  SUPABASE_DEV: { url: "", key: "" },
+  SUPABASE_DEV: { url: "https://tchtzuuiijaubjjuabda.supabase.co", key: "sb_publishable_hiPfDN9451dqo4E-nZ-qhg_YT5h453y" },
   SUPABASE_PROD: { url: "", key: "" },
 
   // 地図の初期表示（東京駅付近）
