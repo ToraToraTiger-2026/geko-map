@@ -14,7 +14,9 @@
   - URL: `https://tchtzuuiijaubjjuabda.supabase.co/rest/v1/public_shops?select=id&limit=1`
   - ヘッダー: `apikey` = config.js の publishable キー
   - 間隔: 1日1〜2回。Test run で HTTP 200 を確認。
-- [ ] **サービスの二段階認証**: GitHub → Cloudflare → Supabase → cron-job.org の順。リカバリーコードは紙に控える（管理画面の二段階認証は完了済み）。
+- [x] GitHub の二段階認証 完了（Cloudflare も GitHub でログインしているため同時に保護される）
+- [ ] Supabase の二段階認証（ログイン方法がGitHubなら不要。メール+パスワードなら要設定）
+- [ ] cron-job.org の二段階認証（項目があれば）と失敗通知
 - [x] `supabase/08_require_mfa.sql` 実行済み。二段階認証つきのログインで管理画面が使えることを確認（2026-10-25）
 - [ ] 規約・プライバシーの「制定日」を、公開日に直す（`docs/terms.html` / `docs/privacy.html`）。運営者のハンドル名が決まったら `config.js` の `OPERATOR_NAME` も直す。
 - [ ] 1週間後に Supabase が停止していないか確認。
