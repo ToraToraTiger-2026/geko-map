@@ -57,4 +57,4 @@ Turnstile のサイトキー・公開URL・運営者名が未設定なら知ら�
 - 荒らし：管理画面の「設定」で投稿の受付を停止 → 問題の投稿を「非表示」にして調査。
 - 匿名サインインを止める：Supabase の Authentication で Anonymous sign-ins をオフ。
 - キー漏えいの疑い：Supabase の API Keys で publishable キーを再発行 → `docs/js/config.js` を更新して再公開。管理者のパスワードを変更。
-- 管理者の認証アプリを失くした：SQL Editor で `02_rls.sql` の `is_admin()` を再実行して二段階認証の必須を外し、管理画面で登録し直してから `08_require_mfa.sql` を再実行。
+- 管理者の認証アプリを失くした（項目を消してしまった）：Supabase の SQL Editor で `delete from auth.mfa_factors where user_id in (select user_id from public.admins);` を実行して二段階認証の登録だけを消し、管理画面にメール・パスワードでログインして、表示されるQRコードから登録し直す。`08_require_mfa.sql` を実行済みでも同じ手順で復旧できる（このSQLは SQL Editor で実行するため、管理者の権限は不要）。認証アプリの項目は「geko-map 管理画面」など分かる名前に変えておく。
