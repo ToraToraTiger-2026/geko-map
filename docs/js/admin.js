@@ -309,9 +309,15 @@ async function afterPasswordLogin() {
     return;
   }
 
-  // 未登録なら、その場で登録する
-  for (const f of factors?.totp ?? []) await db.auth.mfa.unenroll({ factorId: f.id }); // 途中で止まった未完了の登録を片付ける
-  const { data, error } = await db.auth.mfa.enroll({ factorType: "totp", friendlyName: "admin" });
+  // 未登録なら、その場で登録する。
+  // 途中で止まった未完了の登録（確認前の状態）が残っていると名前が重複するので、先に片付ける。
+  // （totp には確認済みのものしか入らない。未完了のものは all に入っている）
+  for (const f of factors?.all ?? []) {
+    if (f.factor_type === "totp" && f.status !== "verified") {
+      await db.auth.mfa.unenroll({ factorId: f.id });
+    }
+  }
+  const { data, error } = await db.auth.mfa.enroll({ factorType: "totp", friendlyName: "geko-map-admin" });
   if (error) {
     console.error(error);
     setStatus(`二段階認証の登録を始められませんでした: ${error.message}`);
