@@ -8,6 +8,9 @@
 
 * { box-sizing: border-box; }
 
+/* hidden 属性が、他の display 指定に負けないようにする */
+[hidden] { display: none !important; }
+
 html, body { height: 100%; margin: 0; }
 
 body {
@@ -62,4 +65,41 @@ a { color: var(--accent); }
 .popup-note { margin: 6px 0 0; font-size: 0.7rem; color: var(--muted); }
 
 .page { max-width: 40rem; margin: 0 auto; padding: 16px; }
-.page-body { overflow-y: auto; }
+/* 文章・フォーム中心のページ（地図が画面いっぱいのトップとは違い、普通にスクロールする） */
+.page-body { display: block; height: auto; min-height: 100dvh; }
+.page h1 { font-size: 1.4rem; }
+.step { font-size: 1.05rem; margin: 24px 0 8px; }
+.map-small { height: 50vh; min-height: 280px; border: 1px solid var(--border); }
+
+.header-link { margin-left: auto; font-size: 0.9rem; white-space: nowrap; }
+
+/* フォーム */
+.field { display: block; margin: 14px 0; }
+.field > span { display: block; font-weight: 600; margin-bottom: 4px; }
+.field small { display: block; color: var(--muted); margin-top: 4px; }
+.field input[type="text"], .field input[type="email"], .field select, .field textarea {
+  width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px;
+  background: #fff; color: var(--fg); font: inherit; font-size: 16px; /* 16px未満だとスマホで勝手に拡大される */
+}
+.form-help { color: var(--muted); font-size: 0.9rem; }
+.form-message { min-height: 1.5em; margin: 8px 0; font-weight: 600; }
+
+.button-row { display: flex; gap: 8px; justify-content: flex-end; margin: 12px 0; }
+.button-row.start { justify-content: flex-start; margin: 6px 0; }
+.button {
+  min-height: 44px; padding: 8px 16px; border: 1px solid var(--border); border-radius: 6px;
+  background: #fff; color: var(--fg); font: inherit; cursor: pointer;
+}
+.button.small { min-height: 36px; padding: 4px 12px; font-size: 0.9rem; }
+.button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.button:disabled { opacity: 0.6; cursor: default; }
+
+.nearby { margin: 12px 0; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 6px; background: #f1f8f4; }
+.nearby h3 { margin: 4px 0; font-size: 1rem; }
+.nearby li { margin: 6px 0; }
+
+/* ダイアログ（評価・通報） */
+.dialog { width: min(92vw, 28rem); max-height: 90dvh; padding: 16px; border: 1px solid var(--border); border-radius: 8px; overflow-y: auto; }
+.dialog::backdrop { background: rgba(0, 0, 0, 0.4); }
+.dialog-title { margin: 0 0 8px; font-size: 1.1rem; }
+.dialog-shop { margin: 0 0 8px; font-weight: 600; }

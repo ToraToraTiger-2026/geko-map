@@ -1,7 +1,9 @@
 import { CONFIG } from "./config.js";
 import { listShops } from "./data-source.js";
 import { renderFilterPanel, filterShops } from "./filters.js";
-import { initMap, showShops } from "./map.js";
+import { initMap, showShops, openShop } from "./map.js";
+import { openReviewDialog, openReportDialog } from "./dialogs.js";
+import { isUuid } from "./util.js";
 
 // サイト名・運営者名は config.js の値を差し込む（HTMLに直接書かない）
 document.title = CONFIG.SITE_NAME;
@@ -10,7 +12,7 @@ for (const node of document.querySelectorAll("[data-site-name]")) node.textConte
 const status = document.getElementById("status");
 
 async function start() {
-  initMap("map");
+  initMap("map", { onReview: openReviewDialog, onReport: openReportDialog });
 
   let shops = [];
   try {
@@ -29,6 +31,10 @@ async function start() {
 
   renderFilterPanel(document.getElementById("filters"), update);
   update([]);
+
+  // ?shop=<id> で開かれたら、そのお店のポップアップを開く（お店の登録画面からのリンク用）
+  const target = new URLSearchParams(location.search).get("shop");
+  if (isUuid(target)) openShop(target);
 }
 
 start();

@@ -31,7 +31,29 @@ export const CONFIG = {
 
   // 絞り込み: その特徴の投稿がこの件数以上あるお店だけを「満たす」とみなす
   MIN_MENTIONS: 1,
+
+  // 投稿できる範囲（今は東京周辺だけ）。DB側のトリガー(06_write_rules.sql)と同じ値にしておくこと
+  AREA_BOUNDS: { south: 35.3, north: 36.0, west: 138.9, east: 140.0 },
+
+  // 重複確認のために「近く」とみなす半径（メートル）
+  NEARBY_RADIUS_M: 200,
 };
+
+// 通報の理由
+export const REPORT_REASONS = [
+  "情報が間違っている",
+  "閉店している・移転した",
+  "不適切な内容",
+  "営業妨害・いたずら",
+  "その他",
+];
+
+// 削除依頼をする人の区分（値はDBの制約と対応）
+export const REQUESTER_TYPES = [
+  { value: "shop_owner", label: "お店の関係者" },
+  { value: "poster", label: "投稿した本人" },
+  { value: "other", label: "その他" },
+];
 
 // 下戸向けの特徴。key は固定（変更不可）、label は後から変えてよい。
 export const FEATURES = [

@@ -6,15 +6,30 @@ import { el, googleMapsUrl } from "./util.js";
 const L = window.L;
 let map;
 let markerLayer;
+let handlers = {};
+const markersById = new Map();
 
-export function initMap(containerId) {
-  map = L.map(containerId).setView(CONFIG.MAP_CENTER, CONFIG.MAP_ZOOM);
-  // 右下の著作権表示は消さない（OSMの利用条件）。
+/** 地図を作る。タイルの配信元は config.js の TILE（右下の著作権表示は消さない） */
+export function createMap(containerId) {
+  const m = L.map(containerId).setView(CONFIG.MAP_CENTER, CONFIG.MAP_ZOOM);
   L.tileLayer(CONFIG.TILE.url, {
     attribution: CONFIG.TILE.attribution,
     maxZoom: CONFIG.TILE.maxZoom,
-  }).addTo(map);
+  }).addTo(m);
+  return m;
+}
+
+/** onReview(shop) / onReport(shop) は、ポップアップのボタンを押したときに呼ばれる */
+export function initMap(containerId, popupHandlers = {}) {
+  map = createMap(containerId);
   markerLayer = L.layerGroup().addTo(map);
+  handlers = popupHandlers;
+}
+
+function actionButton(label, onClick) {
+  const b = el("button", { text: label, className: "button small", attrs: { type: "button" } });
+  b.addEventListener("click", onClick);
+  return b;
 }
 
 /** ポップアップの中身。DOM要素として組み立てる（innerHTMLは使わない）。 */
@@ -28,6 +43,15 @@ function buildPopup(shop) {
     attrs: { href: googleMapsUrl(shop), target: "_blank", rel: "noopener noreferrer" },
   });
 
+  const deleteLink = el("a", {
+    text: "削除を依頼する",
+    attrs: { href: `delete-request.html?shop=${encodeURIComponent(shop.id)}` },
+  });
+
+  const actions = [];
+  if (handlers.onReview) actions.push(actionButton("評価する", () => handlers.onReview(shop)));
+  if (handlers.onReport) actions.push(actionButton("通報", () => handlers.onReport(shop)));
+
   return el("div", { className: "popup" }, [
     el("h2", { text: shop.name, className: "popup-name" }),
     el("p", { text: shop.address, className: "popup-address" }),
@@ -35,6 +59,8 @@ function buildPopup(shop) {
       ? el("ul", { className: "popup-features" }, rows)
       : el("p", { text: "まだ特徴の投稿がありません", className: "popup-empty" }),
     el("p", {}, [link]),
+    actions.length ? el("div", { className: "button-row start" }, actions) : el("span"),
+    el("p", { className: "popup-note" }, [deleteLink]),
     el("p", {
       text: "情報は利用者の投稿に基づきます。正確性は保証できません。必ず公式情報もご確認ください。",
       className: "popup-note",
@@ -44,7 +70,19 @@ function buildPopup(shop) {
 
 export function showShops(shops) {
   markerLayer.clearLayers();
+  markersById.clear();
   for (const shop of shops) {
-    L.marker([shop.lat, shop.lng]).bindPopup(buildPopup(shop), { maxWidth: 280 }).addTo(markerLayer);
+    const marker = L.marker([shop.lat, shop.lng]).bindPopup(buildPopup(shop), { maxWidth: 280 });
+    marker.addTo(markerLayer);
+    markersById.set(shop.id, marker);
   }
+}
+
+/** 指定したお店の位置へ移動して、ポップアップを開く（見つからなければ false） */
+export function openShop(id) {
+  const marker = markersById.get(id);
+  if (!marker) return false;
+  map.setView(marker.getLatLng(), Math.max(map.getZoom(), 16));
+  marker.openPopup();
+  return true;
 }

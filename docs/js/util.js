@@ -13,6 +13,13 @@ export function el(tag, { text, className, attrs } = {}, children = []) {
   return node;
 }
 
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** URLのパラメータなど、外から来たIDがUUIDの形か確認する */
+export function isUuid(value) {
+  return typeof value === "string" && UUID_PATTERN.test(value);
+}
+
 /** Googleマップへのリンク。place_id があればそれを使い、無ければ「店名＋住所」の検索リンク。 */
 export function googleMapsUrl(shop) {
   const query = encodeURIComponent(`${shop.name} ${shop.address}`);

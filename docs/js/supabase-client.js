@@ -1,5 +1,5 @@
 // Supabase への接続。supabase-js は vendor/supabase-js/supabase.js で読み込み済み（グローバルの supabase）。
-// フェーズ2は閲覧のみなので、ログイン状態は保存しない（匿名サインインはフェーズ3で追加）。
+// 匿名サインインの「仮ID」を同じ端末で使い続けるため、ログイン状態をこの端末のブラウザに保存する。
 
 import { CONFIG } from "./config.js";
 
@@ -21,7 +21,7 @@ export function getClient() {
   if (!client) {
     const env = pickEnv();
     client = window.supabase.createClient(env.url, env.key, {
-      auth: { persistSession: false, autoRefreshToken: false },
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
     });
   }
   return client;

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self' https://*.supabase.co; base-uri 'none'; form-action 'none'">
+  <title>削除依頼</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-body">
+  <main class="page">
+    <p><a href="index.html">← 地図に戻る</a></p>
+    <h1>削除依頼</h1>
+    <p class="form-help">
+      掲載内容の削除・訂正をご希望の場合は、こちらからご連絡ください。管理者が内容を確認します。
+      原則として削除し、判断に迷う場合は、いったん非表示にしてから確認します。
+      投稿の訂正は、削除依頼のあとに再投稿という形で対応します。
+    </p>
+
+    <form id="request-form" novalidate>
+      <label class="field"><span>対象のお店（名前や場所など）</span>
+        <input id="f-target" type="text" maxlength="300" autocomplete="off">
+      </label>
+      <label class="field"><span>あなたの立場</span>
+        <select id="f-type"></select>
+      </label>
+      <label class="field"><span>依頼の内容（1000字まで）</span>
+        <textarea id="f-message" rows="6" maxlength="1000"></textarea>
+      </label>
+      <label class="field"><span>メールアドレス（任意）</span>
+        <input id="f-email" type="email" maxlength="254" autocomplete="email">
+        <small>返信が必要な場合のみ入力してください。管理者以外には表示されません。対応完了から6か月後に削除します。</small>
+      </label>
+
+      <p id="form-message" class="form-message" role="status"></p>
+      <div class="button-row">
+        <button id="submit" type="submit" class="button primary">送信する</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="vendor/supabase-js/supabase.js"></script>
+  <script type="module" src="js/delete-request.js"></script>
+</body>
+</html>

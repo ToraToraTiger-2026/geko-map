@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://*.supabase.co; base-uri 'none'; form-action 'none'">
+  <title>お店を登録する</title>
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-body">
+  <main class="page">
+    <p><a href="index.html">← 地図に戻る</a></p>
+    <h1>お店を登録する</h1>
+    <p class="form-help">
+      お酒を飲まない人でも入りやすいお店を教えてください。投稿は管理者の承認後に地図へ表示されます。
+      送信後は編集できません（訂正は削除依頼と再投稿で対応します）。投稿者名は表示されません。
+    </p>
+
+    <h2 class="step">1. 地図でお店の場所をタップ（ピンは動かせます）</h2>
+    <div id="pick-map" class="map-small"></div>
+    <p id="pin-text" class="status">まだピンを置いていません。</p>
+
+    <div id="nearby" class="nearby" hidden>
+      <h3>この近くに登録済みのお店があります</h3>
+      <p class="form-help">同じお店ではありませんか？ 同じお店なら、登録ではなく評価をお願いします。</p>
+      <ul id="nearby-list"></ul>
+    </div>
+
+    <form id="shop-form" novalidate>
+      <h2 class="step">2. お店の情報</h2>
+      <label class="field"><span>お店の名前（60字まで）</span>
+        <input id="f-name" type="text" maxlength="60" autocomplete="off">
+      </label>
+      <label class="field"><span>住所（120字まで）</span>
+        <input id="f-address" type="text" maxlength="120" autocomplete="off">
+      </label>
+      <label class="field"><span>GoogleマップのID（任意）</span>
+        <input id="f-place" type="text" maxlength="200" autocomplete="off">
+        <small>Googleマップの「場所ID」（ChIJ…で始まる文字列）をご存じの場合のみ。わからなければ空欄で構いません。</small>
+      </label>
+
+      <h2 class="step">3. 当てはまる特徴（1つ以上）</h2>
+      <div id="features" class="filters"></div>
+
+      <label id="confirm-row" class="filter-item" hidden>
+        <input id="f-confirm" type="checkbox">
+        <span>近くの一覧に、同じお店がないことを確認しました</span>
+      </label>
+
+      <p id="form-message" class="form-message" role="status"></p>
+      <div class="button-row">
+        <button id="submit" type="submit" class="button primary">送信する</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="vendor/supabase-js/supabase.js"></script>
+  <script type="module" src="js/post.js"></script>
+</body>
+</html>
