@@ -3,7 +3,7 @@
 
 export const CONFIG = {
   SITE_NAME: "下戸マップ", // 仮の名前。ここを変えれば全ページに反映される
-  OPERATOR_NAME: "下戸マップ運営者", // 運営者の表記。ハンドル名が決まったらここを変える
+  OPERATOR_NAME: "下戸マップ運営事務局", // 運営者の表記
 
   // データの読み込み方: "dummy"（ダミーJSON） | "supabase" | "json"（書き出し済みJSON）
   DATA_MODE: "supabase",

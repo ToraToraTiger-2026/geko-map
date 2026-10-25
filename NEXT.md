@@ -15,10 +15,11 @@
   - ヘッダー: `apikey` = config.js の publishable キー
   - 間隔: 1日1〜2回。Test run で HTTP 200 を確認。
 - [x] GitHub の二段階認証 完了（Cloudflare も GitHub でログインしているため同時に保護される）
-- [ ] Supabase の二段階認証（ログイン方法がGitHubなら不要。メール+パスワードなら要設定）
-- [ ] cron-job.org の二段階認証（項目があれば）と失敗通知
+- [x] Supabase は GitHub でログイン（GitHub の二段階認証で保護）
+- [x] cron-job.org の二段階認証（MFA）登録済み
+- [ ] cron-job.org の失敗通知メールの設定（ジョブ編集 → Notifications）
 - [x] `supabase/08_require_mfa.sql` 実行済み。二段階認証つきのログインで管理画面が使えることを確認（2026-10-25）
-- [ ] 規約・プライバシーの「制定日」を、公開日に直す（`docs/terms.html` / `docs/privacy.html`）。運営者のハンドル名が決まったら `config.js` の `OPERATOR_NAME` も直す。
+- [x] 制定日 2026年10月25日、運営者「下戸マップ運営事務局」に設定済み
 - [ ] 1週間後に Supabase が停止していないか確認。
 
 ## 運用メモ
