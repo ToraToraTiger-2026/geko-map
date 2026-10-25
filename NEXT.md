@@ -3,13 +3,13 @@
 最終更新: 2026-10-25
 
 ## 現在地
-- フェーズ0〜3 完了。フェーズ4（公開）はほぼ完了。
+- フェーズ0〜4 完了（公開済み）。以降は運用。
 - 公開URL: https://toratoratiger-2026.github.io/geko-map/
 - 公開済み: 地図、投稿、通報、削除依頼、管理画面、規約、プライバシー。
 - Turnstile（ロボット判定）: サイト側・Supabase側とも有効（トークンなしの匿名サインインが拒否されることを確認済み）。
 - 設計・作業計画の全文: `C:\Users\tatsu\.claude\plans\pasted-content-id-dc5a-giggly-ullman.md`（リポジトリ外）
 
-## フェーズ4の残り（あなたの作業）
+## フェーズ4（完了）
 - [x] **cron-job.org の設定**（Supabase の一時停止を防ぐ）— Test run 成功（2026-10-25）。失敗通知メールの設定も推奨
   - URL: `https://tchtzuuiijaubjjuabda.supabase.co/rest/v1/public_shops?select=id&limit=1`
   - ヘッダー: `apikey` = config.js の publishable キー
@@ -17,7 +17,7 @@
 - [x] GitHub の二段階認証 完了（Cloudflare も GitHub でログインしているため同時に保護される）
 - [x] Supabase は GitHub でログイン（GitHub の二段階認証で保護）
 - [x] cron-job.org の二段階認証（MFA）登録済み
-- [ ] cron-job.org の失敗通知メールの設定（ジョブ編集 → Notifications）
+- [x] cron-job.org の失敗通知メール 設定済み
 - [x] `supabase/08_require_mfa.sql` 実行済み。二段階認証つきのログインで管理画面が使えることを確認（2026-10-25）
 - [x] 制定日 2026年10月25日、運営者「下戸マップ運営事務局」に設定済み
 - [ ] 1週間後に Supabase が停止していないか確認。
