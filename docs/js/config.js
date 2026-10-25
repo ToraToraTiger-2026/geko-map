@@ -20,7 +20,7 @@ export const CONFIG = {
 
   // Cloudflare Turnstile のサイトキー（公開してよい値）。空のあいだはロボット判定をしない（開発中）。
   // 設定するときは、Turnstile のホスト名に localhost と 127.0.0.1 も加えておくと、手元の確認でも動く。
-  TURNSTILE_SITE_KEY: "",
+  TURNSTILE_SITE_KEY: "0x4AAAAAAFlCVzfQZVDmkKX8",
 
   // 地図の初期表示（東京駅付近）
   MAP_CENTER: [35.6812, 139.7671],
