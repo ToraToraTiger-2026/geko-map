@@ -3,7 +3,7 @@
 
 export const CONFIG = {
   SITE_NAME: "下戸マップ", // 仮の名前。ここを変えれば全ページに反映される
-  OPERATOR_NAME: "運営者（ハンドル名・未定）", // 仮の表記
+  OPERATOR_NAME: "下戸マップ運営者", // 運営者の表記。ハンドル名が決まったらここを変える
 
   // データの読み込み方: "dummy"（ダミーJSON） | "supabase" | "json"（書き出し済みJSON）
   DATA_MODE: "supabase",
@@ -16,7 +16,7 @@ export const CONFIG = {
   SUPABASE_PROD: { url: "", key: "" },
 
   // 公開URL（正規のURL）。独自ドメインにしたら、ここを変える
-  SITE_URL: "",
+  SITE_URL: "https://toratoratiger-2026.github.io/geko-map/",
 
   // Cloudflare Turnstile のサイトキー（公開してよい値）。空のあいだはロボット判定をしない（開発中）。
   // 設定するときは、Turnstile のホスト名に localhost と 127.0.0.1 も加えておくと、手元の確認でも動く。
