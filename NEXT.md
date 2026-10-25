@@ -1,36 +1,46 @@
 # 作業メモ（次回の続きから）
 
-最終更新: 2026-10-24
+最終更新: 2026-10-25
 
 ## 現在地
-- フェーズ0・1・2 完了（コミット済み）。
-- 地図は Supabase の `public_shops` / `public_shop_feature_counts` から読み込み中（`docs/js/config.js` の `DATA_MODE: "supabase"`）。
-- Supabase に 01〜05 の SQL を実行済み。RLS の動作（直接読み込みは拒否、公開ビューは承認済みのみ）は確認済み。
+- フェーズ0・1・2・3 の実装は完了（コミット済み）。
+- フェーズ3で作ったもの: 投稿用のDBルール（`supabase/06`）、整理用の関数（`07`）、二段階認証の必須化（`08`）、
+  投稿・評価・通報・削除依頼の画面、管理画面 `docs/admin/`。
 - 設計・作業計画の全文: `C:\Users\tatsu\.claude\plans\pasted-content-id-dc5a-giggly-ullman.md`（リポジトリ外）
 
-## 次回: フェーズ3（匿名投稿・管理者ログイン・承認・通報／削除依頼）
+## フェーズ3の残り（小さな確認）
+- [ ] `supabase/08_require_mfa.sql` を実行したか（管理画面で二段階認証を済ませた後に実行）。
+- [ ] Supabase の「新規ユーザー登録を許可」をオフにしても、匿名サインインが動くか実測。
+      （オフにして、地図から評価を送って成功すれば両立。失敗したらオンに戻す。管理者の安全性は `admins` 表が守るので、オフは必須ではない）
+- [ ] テストデータの整理: `delete from public.shops where name like '%（テスト）%';`（公開前に必ず）
+- [ ] 匿名ユーザーの掃除: pg_cron を有効にして `07_cleanup.sql` 末尾の cron.schedule を実行、
+      または月1回 `select public.cleanup_old_data();` を手動実行。
+- [ ] 匿名ユーザーが MAU に数えられるか（Supabase の Usage 画面で確認）。
 
-### 先にあなたがやること（計画の §12-C）
-1. Supabase → Authentication → Sign In / Providers → **Anonymous sign-ins** をオン。
-2. Authentication → Users → Add user で自分のメール・パスワードを作成（Auto Confirm）。パスワードは管理ツールに保存。
-3. 表示された **User UID** で、SQL Editor に `insert into public.admins (user_id) values ('UID');` を実行（このSQLはGitに入れない）。
-4. Authentication → Rate Limits で匿名サインインの上限を確認。
+## 次: フェーズ4（GitHub Pages で公開）
+### あなたの作業（計画 §12-D）
+1. GitHub で Public リポジトリ `geko-map` を作成 → `git remote add` と `git push -u origin main`。
+2. Settings → Pages → Deploy from a branch → `main` / `/docs`。
+3. Supabase → Authentication → URL Configuration → Site URL に公開URLを設定。
+4. Cloudflare Turnstile を作成（ドメイン=`ユーザー名.github.io`）→ サイトキーを `config.js`、シークレットキーを Supabase（Authentication → Attack Protection → CAPTCHA）に入力。
+5. cron-job.org でジョブ作成（`public_shops` への GET、ヘッダー `apikey`、1日1〜2回）。
+6. GitHub / Supabase / Cloudflare / cron-job.org の全てで二段階認証を有効化。
 
-### Claude の作業（この順で進める）
-1. DB: トリガー（`created_by` / `status` の強制、24時間あたりの上限、受付停止スイッチ、承認待ち総量の安全弁）、一般利用者向けの INSERT 権限とポリシー、`pg_cron` の整理SQL（`supabase/06_*.sql` 以降）。
-2. 画面: `anon-auth.js`、`api.js`、`post-shop.html`（ピン配置・近隣一覧）、評価パネル、通報、`delete-request.html`。
-3. 管理画面 `docs/admin/`: ログイン、TOTP、承認・却下・非表示、似た店の並列表示、通報／削除依頼の一覧。
-4. 確認項目は計画 §10-2「セキュリティの確認手順」の6項目。
+### Claude の作業
+- Turnstile の組み込み（`anon-auth.js` の captchaToken）と CSP の更新（`challenges.cloudflare.com`）。
+- `config.js` の `SUPABASE_PROD`、`SITE_URL` の設定。タイルCSP、相対パスの確認。
+- 利用規約・プライバシーポリシー本文（運営者はハンドル名、連絡窓口は削除依頼フォームのみ、メールは対応完了後6か月で削除）。
+- 公開前チェックリスト（キー漏れ検査、`git log -p` の検索、noindex）、README、OGP。
+- 復旧手順書（Supabase の一時停止からの復元）。
 
-### フェーズ3で実機確認すること
-- 「新規登録を許可しない」設定と匿名サインインが両立するか。
-- 匿名ユーザーが MAU に数えられるか。
-
-## 公開前に必ずやること（フェーズ4）
-- テストデータの削除: `delete from public.shops where name like '%（テスト）%';`
-- Turnstile（CAPTCHA）の有効化、cron-job.org の設定、規約・プライバシー本文の作成、GitHub Pages の設定。
+## 公開前に必ずやること
+- テストデータの削除（上記）。
+- Turnstile の有効化。
+- 規約・プライバシーの本文作成。
+- セキュリティ確認手順（計画 §10-2）の6項目を、公開URLで再実施。
 
 ## 覚えておくこと
 - コミットのメールは noreply（`geko-map` リポジトリ内の設定）。
 - Live Server で出る「inline script violates CSP」は、Live Server 自身が差し込むスクリプトによるもので問題なし。
 - 秘密情報（secret / service_role キー、DBパスワード、管理者UID入りSQL）はGitに入れない。
+- 登録画面の近隣一覧は、承認済みの店だけが対象（半径200m）。テストで出ないときは `status` を確認。
