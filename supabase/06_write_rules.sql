@@ -6,7 +6,8 @@
 --   * 上限（24時間あたり）、受付停止スイッチ、承認待ち総量の安全弁もトリガーで強制する。
 --   * 新しいお店・評価は専用の関数（submit_shop / submit_review）経由で、一度に登録する。
 --   * 一般の利用者に UPDATE / DELETE は一切与えない（送信後は編集不可）。
---   * auth.uid() が null（SQL Editor から実行）または管理者のときは、トリガーは何もしない。
+--   * auth.uid() が null（SQL Editor から実行）のときだけ、トリガーは何もしない。
+--     管理者としてログインしたブラウザから送る投稿にも、一般の利用者と同じルール（上限・1店1件）をかける。
 --
 -- 上限の値（変えるときはこのファイルの数字を直して再実行）:
 --   お店 3件/24h、評価 10件/24h、通報 10件/24h、削除依頼 3件/24h、
@@ -61,7 +62,7 @@ security definer
 set search_path = ''
 as $$
 begin
-  if auth.uid() is null or public.is_admin() then
+  if auth.uid() is null then
     return new;
   end if;
   if not public.posting_enabled() then
@@ -144,7 +145,7 @@ security definer
 set search_path = ''
 as $$
 begin
-  if auth.uid() is null or public.is_admin() then
+  if auth.uid() is null then
     return new;
   end if;
   if not public.posting_enabled() then
@@ -247,7 +248,7 @@ security definer
 set search_path = ''
 as $$
 begin
-  if auth.uid() is null or public.is_admin() then
+  if auth.uid() is null then
     return new;
   end if;
   if new.target_type <> 'shop'
@@ -286,7 +287,7 @@ security definer
 set search_path = ''
 as $$
 begin
-  if auth.uid() is null or public.is_admin() then
+  if auth.uid() is null then
     return new;
   end if;
   if (select count(*) from public.deletion_requests where status = 'open') >= 1000 then
