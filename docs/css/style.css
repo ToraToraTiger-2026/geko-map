@@ -103,3 +103,15 @@ a { color: var(--accent); }
 .dialog::backdrop { background: rgba(0, 0, 0, 0.4); }
 .dialog-title { margin: 0 0 8px; font-size: 1.1rem; }
 .dialog-shop { margin: 0 0 8px; font-weight: 600; }
+
+/* 管理画面 */
+.admin { max-width: 52rem; }
+.admin-bar { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; }
+.tab { min-height: 40px; padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; background: #fff; font: inherit; cursor: pointer; }
+.tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.card { margin: 12px 0; padding: 4px 14px; border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+.card h3 { margin: 10px 0 4px; font-size: 1.05rem; }
+.card p { margin: 4px 0; overflow-wrap: anywhere; }
+.button.danger { border-color: #b3261e; color: #b3261e; }
+.mfa-qr { display: block; margin: 8px 0; background: #fff; }

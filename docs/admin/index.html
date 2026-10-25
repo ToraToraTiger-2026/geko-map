@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://*.supabase.co; base-uri 'none'; form-action 'none'">
+  <title>管理画面</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="page-body">
+  <main class="page admin">
+    <h1>管理画面</h1>
+    <p id="admin-status" class="form-message" role="status">読み込み中…</p>
+
+    <!-- ログイン -->
+    <form id="login-form" hidden>
+      <label class="field"><span>メールアドレス</span>
+        <input id="login-email" type="email" autocomplete="username">
+      </label>
+      <label class="field"><span>パスワード</span>
+        <input id="login-password" type="password" autocomplete="current-password">
+      </label>
+      <div class="button-row start"><button type="submit" class="button primary">ログイン</button></div>
+    </form>
+
+    <!-- 二段階認証（TOTP）: 初回の登録 -->
+    <section id="mfa-enroll" hidden>
+      <h2>二段階認証の登録</h2>
+      <p class="form-help">認証アプリ（Google Authenticator など）で下のQRコードを読み取り、表示された6桁の数字を入力してください。</p>
+      <img id="mfa-qr" class="mfa-qr" alt="二段階認証のQRコード" width="200" height="200">
+      <p class="form-help">読み取れない場合の手入力用コード：<code id="mfa-secret"></code></p>
+    </section>
+
+    <!-- 二段階認証（TOTP）: 6桁の入力 -->
+    <form id="mfa-form" hidden>
+      <label class="field"><span>認証アプリの6桁の数字</span>
+        <input id="mfa-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+      </label>
+      <div class="button-row start"><button type="submit" class="button primary">確認する</button></div>
+    </form>
+
+    <!-- 管理メニュー -->
+    <section id="dashboard" hidden>
+      <div class="admin-bar">
+        <nav id="tabs" class="tabs"></nav>
+        <button id="signout" type="button" class="button small">ログアウト</button>
+      </div>
+      <div id="panel"></div>
+    </section>
+
+    <p><a href="../index.html">地図へ</a></p>
+  </main>
+
+  <script src="../vendor/supabase-js/supabase.js"></script>
+  <script type="module" src="../js/admin.js"></script>
+</body>
+</html>
