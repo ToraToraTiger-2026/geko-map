@@ -10,7 +10,7 @@
 - 設計・作業計画の全文: `C:\Users\tatsu\.claude\plans\pasted-content-id-dc5a-giggly-ullman.md`（リポジトリ外）
 
 ## フェーズ4の残り（あなたの作業）
-- [ ] **cron-job.org の設定**（Supabase の一時停止を防ぐ）
+- [x] **cron-job.org の設定**（Supabase の一時停止を防ぐ）— Test run 成功（2026-10-25）。失敗通知メールの設定も推奨
   - URL: `https://tchtzuuiijaubjjuabda.supabase.co/rest/v1/public_shops?select=id&limit=1`
   - ヘッダー: `apikey` = config.js の publishable キー
   - 間隔: 1日1〜2回。Test run で HTTP 200 を確認。
