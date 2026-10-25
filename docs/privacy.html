@@ -3,15 +3,75 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; base-uri 'none'; form-action 'none'">
   <title>プライバシーポリシー</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="page-body">
-  <main class="page">
+  <main class="page legal">
     <h1>プライバシーポリシー</h1>
-    <p>（準備中です。公開前に本文を作成します。）</p>
-    <p><a href="index.html">地図に戻る</a></p>
+    <p><span data-operator>運営者</span>（以下「運営者」）は、<span data-site-name>下戸マップ</span>（以下「本サービス」）における利用者の情報を、次のとおり取り扱います。</p>
+
+    <h2>1. 取得する情報と利用目的</h2>
+    <table class="legal-table">
+      <thead><tr><th>情報</th><th>内容・取得の方法</th><th>利用目的</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>仮ID</td>
+          <td>投稿や通報などをするときに、端末ごとに自動で発行される目に見えない識別子です。お名前やメールアドレスとは結びつきません。端末のブラウザ内に保存されます。</td>
+          <td>投稿回数の制限、いたずら・不正投稿の防止、重複した評価の防止</td>
+        </tr>
+        <tr>
+          <td>投稿内容</td>
+          <td>お店の名前、住所、地図上の位置、特徴の選択、GoogleマップのID（任意）、通報の理由と補足</td>
+          <td>本サービス上での表示（承認後）、運営の確認</td>
+        </tr>
+        <tr>
+          <td>メールアドレス</td>
+          <td>削除依頼フォームで、任意で入力された場合のみ</td>
+          <td>削除依頼への返信。管理者以外には表示されません。</td>
+        </tr>
+        <tr>
+          <td>接続情報</td>
+          <td>IPアドレス、ブラウザの種類など。利用する外部サービス（下記）のサーバーに記録されます。</td>
+          <td>サービスの提供、不正利用の防止</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>投稿者名は取得せず、表示もしません。</p>
+
+    <h2>2. 保管期間</h2>
+    <ul>
+      <li>削除依頼のメールアドレス：対応が完了してから6か月後に削除します。</li>
+      <li>仮ID：作成から30日が過ぎ、未対応の投稿がないものは、定期的に削除します。承認された投稿は、仮IDが削除されても残ります。</li>
+      <li>承認された投稿：削除依頼などで削除するまで保管します。</li>
+    </ul>
+
+    <h2>3. 第三者への提供</h2>
+    <p>法令に基づく場合を除き、取得した情報を本人の同意なく第三者に提供しません。</p>
+
+    <h2>4. 利用する外部サービス</h2>
+    <p>本サービスは、次の外部サービスを利用しています。利用者がページを開くと、これらのサービスに接続情報（IPアドレスなど）が送信されます。</p>
+    <ul>
+      <li>Supabase（データベースと仮IDの管理。日本のリージョンを使用）</li>
+      <li>GitHub Pages（サイトの配信）</li>
+      <li>OpenStreetMap（地図画像の配信）</li>
+      <li>Cloudflare Turnstile（ロボットによる不正投稿の判定）</li>
+      <li>Google マップ（お店のリンク先。リンクを開いたときのみ接続されます）</li>
+    </ul>
+
+    <h2>5. ブラウザへの保存</h2>
+    <p>本サービスは、仮IDを維持するために、ブラウザのローカルストレージ（端末内の保存領域）を使います。広告や行動追跡のための Cookie は使用していません。ブラウザの設定でデータを消すと、仮IDも消え、新しい仮IDになります。</p>
+
+    <h2>6. 開示・訂正・削除のご請求</h2>
+    <p>運営者が保有する情報の開示・訂正・削除をご希望の場合は、<a href="delete-request.html">削除依頼フォーム</a>からご連絡ください。仮IDは個人を特定できない情報のため、投稿との照合ができない場合があります。</p>
+
+    <h2>7. 改定</h2>
+    <p>必要に応じて、このポリシーを改定します。改定後は、このページに掲載した時点で効力を生じます。</p>
+
+    <p class="form-help">制定日：公開日に記載します。</p>
+    <p><a href="terms.html">利用規約</a> ／ <a href="index.html">地図に戻る</a></p>
   </main>
+  <script type="module" src="js/legal.js"></script>
 </body>
 </html>

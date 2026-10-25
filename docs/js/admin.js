@@ -4,6 +4,7 @@
 import { FEATURES, REQUESTER_TYPES } from "./config.js";
 import { getClient } from "./supabase-client.js";
 import { el, googleMapsUrl } from "./util.js";
+import { getCaptchaToken } from "./captcha.js";
 
 // 他のサイトの枠（iframe）の中では表示しない（クリックジャッキング対策）
 if (window.top !== window.self) {
@@ -328,9 +329,18 @@ let mfaFactorId = null;
 $("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   setStatus("ログイン中…");
+  let captchaToken;
+  try {
+    captchaToken = await getCaptchaToken(); // 公開時だけ有効（開発中は undefined）
+  } catch (err) {
+    console.error(err);
+    setStatus("ロボット判定に失敗しました。ページを再読み込みしてやり直してください。");
+    return;
+  }
   const { error } = await db.auth.signInWithPassword({
     email: $("login-email").value.trim(),
     password: $("login-password").value,
+    options: captchaToken ? { captchaToken } : undefined,
   });
   $("login-password").value = "";
   if (error) {

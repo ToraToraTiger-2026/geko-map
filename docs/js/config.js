@@ -15,6 +15,13 @@ export const CONFIG = {
   SUPABASE_DEV: { url: "https://tchtzuuiijaubjjuabda.supabase.co", key: "sb_publishable_hiPfDN9451dqo4E-nZ-qhg_YT5h453y" },
   SUPABASE_PROD: { url: "", key: "" },
 
+  // 公開URL（正規のURL）。独自ドメインにしたら、ここを変える
+  SITE_URL: "",
+
+  // Cloudflare Turnstile のサイトキー（公開してよい値）。空のあいだはロボット判定をしない（開発中）。
+  // 設定するときは、Turnstile のホスト名に localhost と 127.0.0.1 も加えておくと、手元の確認でも動く。
+  TURNSTILE_SITE_KEY: "",
+
   // 地図の初期表示（東京駅付近）
   MAP_CENTER: [35.6812, 139.7671],
   MAP_ZOOM: 12,

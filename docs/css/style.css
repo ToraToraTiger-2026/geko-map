@@ -115,3 +115,14 @@ a { color: var(--accent); }
 .card p { margin: 4px 0; overflow-wrap: anywhere; }
 .button.danger { border-color: #b3261e; color: #b3261e; }
 .mfa-qr { display: block; margin: 8px 0; background: #fff; }
+
+/* ロボット判定（Turnstile）の確認枠。普段は何も表示されない */
+.captcha-box { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 2000; }
+dialog .captcha-box { position: static; transform: none; margin: 8px 0; }
+
+/* 規約ページ */
+.legal h2 { font-size: 1.1rem; margin: 24px 0 6px; }
+.legal li { margin: 4px 0; }
+.legal-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.legal-table th, .legal-table td { border: 1px solid var(--border); padding: 6px 8px; vertical-align: top; text-align: left; }
+.legal-table th { background: #f1f1ea; }

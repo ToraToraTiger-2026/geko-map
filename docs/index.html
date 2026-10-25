@@ -6,8 +6,12 @@
   <!-- OSMのタイル利用条件でRefererの送信が必要なため、Referrer-Policyを絞りすぎない -->
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <!-- 読み込みを許可する場所の制限（CSP）。タイル配信元を変えたら img-src も合わせて変更すること -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://*.supabase.co; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self' https://*.supabase.co https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; base-uri 'none'; form-action 'none'">
   <title>下戸マップ</title>
+  <meta name="description" content="お酒を飲まない人でも入りやすいお店を、みんなの匿名の投稿で探せる地図です。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="下戸マップ">
+  <meta property="og:description" content="お酒を飲まない人でも入りやすいお店を、みんなの匿名の投稿で探せる地図です。">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
