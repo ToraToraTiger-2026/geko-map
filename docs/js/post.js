@@ -1,7 +1,8 @@
-// お店の登録画面。ピンの位置は、地図をタップして決める（住所からの自動変換はしない）。
+// お店の登録画面。ピンの位置は、地図をタップするか、検索の候補を選んで決める。
 
 import { CONFIG, FEATURES } from "./config.js";
 import { createMap } from "./map.js";
+import { bindSearch } from "./search-ui.js";
 import { el, isUuid } from "./util.js";
 import { ensureSignedIn } from "./anon-auth.js";
 import { submitShop, nearbyShops, describeError } from "./api.js";
@@ -71,14 +72,38 @@ function setPosition(latlng) {
   if (inArea(position)) updateNearby();
 }
 
-map.on("click", (e) => {
+/** ピンを置く（すでにあれば動かす）。位置の確定は setPosition() を通す */
+function placeMarker(latlng) {
   if (!marker) {
-    marker = L.marker(e.latlng, { draggable: true }).addTo(map);
+    marker = L.marker(latlng, { draggable: true }).addTo(map);
     marker.on("dragend", () => setPosition(marker.getLatLng()));
   } else {
-    marker.setLatLng(e.latlng);
+    marker.setLatLng(latlng);
   }
-  setPosition(e.latlng);
+  setPosition(latlng);
+}
+
+map.on("click", (e) => placeMarker(e.latlng));
+
+// 検索で見つけた候補を選んだとき：ピンを立てて寄り、空欄の店名・住所だけ自動入力する（入力済みは上書きしない）
+function pickResult(r) {
+  placeMarker({ lat: r.lat, lng: r.lng });
+  map.setView([r.lat, r.lng], 17);
+  if (!$("f-name").value.trim()) $("f-name").value = r.name.slice(0, 60);
+  if (!$("f-address").value.trim()) $("f-address").value = r.address.slice(0, 120);
+  $("search-status").textContent = `${r.name}の位置にピンを置きました。名前と住所は必要に応じて直してください。`;
+  $("search-results").replaceChildren();
+}
+
+bindSearch({
+  form: $("search-form"),
+  input: $("search-q"),
+  button: $("search-button"),
+  status: $("search-status"),
+  list: $("search-results"),
+  onPick: pickResult,
+  listSingle: true,
+  emptyHint: "地図をタップしてピンを置いてください。",
 });
 
 /** 入力を確認して、問題があれば利用者向けの文を返す（最終的な検査はDB側でも行われる） */

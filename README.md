@@ -23,6 +23,12 @@
 ## ローカルでの確認
 VS Code の拡張機能「Live Server」を入れ、`docs/index.html` を右クリック →「Open with Live Server」。
 
+## 場所検索・現在地
+- トップ：住所／店名で地図を移動、地図左上の📍ボタンで現在地へ移動。投稿画面：店名／住所で探してピンを置く（`docs/js/geocode.js`、`search-ui.js`）。
+- 住所は国土地理院（`msearch.gsi.go.jp`）、店名などは OpenStreetMap Nominatim。CSP の `connect-src` は index.html と post-shop.html だけに追加している。
+- **Nominatim の利用条件を守ること**：1秒に1リクエストまで（geocode.js で間隔を確保）、入力中の自動検索は禁止（ボタン押下／Enterのときだけ検索する）。大量利用になったら自前のジオコーダーや商用APIに切り替える。
+- 現在地は端末内で地図を動かすためだけに使い、保存・送信しない。位置情報は HTTPS か localhost でしか使えない。
+
 ## 地図タイルを変えるとき
 `docs/js/config.js` の `TILE`（URLと著作権表示）と、各HTMLのCSP（`img-src`）の両方を変更する。
 

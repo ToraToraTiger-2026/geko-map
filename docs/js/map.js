@@ -78,6 +78,42 @@ export function showShops(shops) {
   }
 }
 
+/** 指定した位置へ地図を動かす */
+export function flyToLocation(lat, lng, zoom = 16) {
+  map.flyTo([lat, lng], zoom);
+}
+
+let locationLayer = null;
+
+/** 現在地の目印（円マーカー）を表示する。画像は使わない。位置は保存も送信もしない */
+export function showCurrentLocation(lat, lng, accuracy) {
+  if (locationLayer) locationLayer.remove();
+  locationLayer = L.layerGroup().addTo(map);
+  if (Number.isFinite(accuracy) && accuracy > 0) {
+    L.circle([lat, lng], { radius: accuracy, interactive: false, weight: 1, fillOpacity: 0.1 }).addTo(locationLayer);
+  }
+  L.circleMarker([lat, lng], { radius: 8, weight: 3, fillOpacity: 0.9, interactive: false }).addTo(locationLayer);
+}
+
+/** 地図の左上（ズームボタンの下）に「現在地」ボタンを置く。押すと onClick(button) が呼ばれる */
+export function addLocateControl(onClick) {
+  const Locate = L.Control.extend({
+    options: { position: "topleft" },
+    onAdd() {
+      const box = el("div", { className: "leaflet-bar locate-control" });
+      const button = el("button", {
+        text: "📍",
+        attrs: { type: "button", title: "現在地へ移動", "aria-label": "現在地へ移動" },
+      });
+      button.addEventListener("click", () => onClick(button));
+      box.append(button);
+      L.DomEvent.disableClickPropagation(box);
+      return box;
+    },
+  });
+  new Locate().addTo(map);
+}
+
 /** 指定したお店の位置へ移動して、ポップアップを開く（見つからなければ false） */
 export function openShop(id) {
   const marker = markersById.get(id);

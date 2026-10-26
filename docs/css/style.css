@@ -50,6 +50,28 @@ a { color: var(--accent); }
 
 .map { flex: 1; min-height: 0; }
 
+/* 場所検索 */
+.search-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; padding: 6px 16px; }
+.search-label { font-weight: 600; font-size: 0.9rem; }
+.search-bar input[type="text"] {
+  flex: 1 1 12rem; min-width: 0; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px;
+  background: #fff; color: var(--fg); font: inherit; font-size: 16px; /* 16px未満だとスマホで勝手に拡大される */
+}
+.search-results { list-style: none; margin: 0; padding: 0 16px; max-height: 30vh; overflow-y: auto; }
+.search-choice {
+  display: block; width: 100%; min-height: 44px; padding: 6px 10px; margin: 2px 0; text-align: left;
+  border: 1px solid var(--border); border-radius: 6px; background: #fff; color: var(--fg); font: inherit; cursor: pointer;
+}
+.page .search-bar, .page .search-results { padding-left: 0; padding-right: 0; }
+.page .status { padding-left: 0; padding-right: 0; }
+
+/* 地図上の現在地ボタン（Leaflet のズームボタンと同じ見た目の箱） */
+.locate-control button {
+  display: block; width: 34px; height: 34px; padding: 0; border: 0; background: #fff;
+  font-size: 18px; line-height: 34px; text-align: center; cursor: pointer;
+}
+.locate-control button:disabled { opacity: 0.5; cursor: default; }
+
 .site-footer {
   padding: 6px 16px;
   border-top: 1px solid var(--border);
