@@ -27,12 +27,13 @@ a { color: var(--accent); }
 
 .site-header {
   display: flex;
+  flex-wrap: wrap; /* 幅が足りないスマホでは、キャッチコピーが次の行に回る */
   align-items: baseline;
-  gap: 12px;
+  gap: 0 12px;
   padding: 8px 16px;
   border-bottom: 1px solid var(--border);
 }
-.site-header h1 { margin: 0; font-size: 1.2rem; }
+.site-header h1 { margin: 0; font-size: 1.2rem; white-space: nowrap; } /* 「下戸マ／ップ」のような途中改行を防ぐ */
 .tagline { margin: 0; font-size: 0.85rem; color: var(--muted); }
 
 .filter-box { padding: 4px 16px; border-bottom: 1px solid var(--border); }
