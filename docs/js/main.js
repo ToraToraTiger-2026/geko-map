@@ -12,6 +12,11 @@ for (const node of document.querySelectorAll("[data-site-name]")) node.textConte
 
 const status = document.getElementById("status");
 
+// スマホでは絞り込みを閉じた状態で始め、地図を広く使えるようにする（タップで開ける）
+if (window.matchMedia("(max-width: 600px)").matches) {
+  document.querySelector(".filter-box")?.removeAttribute("open");
+}
+
 const searchStatus = document.getElementById("search-status");
 const searchResults = document.getElementById("search-results");
 
