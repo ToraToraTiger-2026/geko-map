@@ -39,8 +39,12 @@ export const CONFIG = {
   // 絞り込み: その特徴の投稿がこの件数以上あるお店だけを「満たす」とみなす
   MIN_MENTIONS: 1,
 
-  // 投稿できる範囲（今は東京周辺だけ）。DB側のトリガー(06_write_rules.sql)と同じ値にしておくこと
-  AREA_BOUNDS: { south: 35.3, north: 36.0, west: 138.9, east: 140.0 },
+  // 投稿できる範囲（日本全域を含む長方形。沖ノ鳥島・南鳥島・与那国島まで入る）。
+  // DB側のトリガー(06_write_rules.sql)と同じ値にしておくこと
+  AREA_BOUNDS: { south: 20.4, north: 45.6, west: 122.9, east: 154.1 },
+
+  // 店名などの検索（Nominatim）で優先する範囲（東京周辺）。範囲外も除外はしない
+  SEARCH_VIEWBOX: { south: 35.3, north: 36.0, west: 138.9, east: 140.0 },
 
   // 重複確認のために「近く」とみなす半径（メートル）
   NEARBY_RADIUS_M: 200,

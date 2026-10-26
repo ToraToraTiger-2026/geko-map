@@ -26,7 +26,9 @@
 - トップに検索欄と地図上の📍現在地ボタン、投稿画面に店名／住所検索を追加。詳細と Nominatim の利用条件（1秒1回・自動検索禁止）は README.md。
 - 検索結果の目印: 店名などはピン、住所（町名・行政区域を含む）は範囲円（半径150m、`map.js` の `SEARCH_AREA_RADIUS_M`）。
 - プライバシーポリシー（§4）に国土地理院・Nominatim と、現在地を送信しない旨を追記済み。
-- 将来の全国展開では `config.js` の `AREA_BOUNDS` と、DB側 `supabase/06_write_rules.sql` を同じ値に広げる（Nominatim の検索優先範囲も連動する）。
+- 全国展開: 投稿範囲を日本全域に広げた（`config.js` の `AREA_BOUNDS` と `supabase/06_write_rules.sql` は同じ値に保つ。新規投稿の region は `jp`）。
+  - **公開前に `06_write_rules.sql` を Supabase の SQL Editor で全文実行すること**（先にDB、後でサイトの順）。未実行だと日本国内の東京以外の投稿が「対象地域外」で弾かれる。
+  - Nominatim の検索優先範囲は `SEARCH_VIEWBOX`（東京周辺のまま）。
 
 ## 運用メモ
 - 月1回の点検・停止時の復旧・緊急時の対応: README.md

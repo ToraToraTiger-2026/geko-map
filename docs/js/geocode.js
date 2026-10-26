@@ -59,9 +59,9 @@ function throttledNominatim(url) {
   return result;
 }
 
-/** OpenStreetMap Nominatim の場所検索。東京周辺（AREA_BOUNDS）を優先する（範囲外も除外はしない） */
+/** OpenStreetMap Nominatim の場所検索。東京周辺（SEARCH_VIEWBOX）を優先する（範囲外も除外はしない） */
 export async function searchPlace(q) {
-  const b = CONFIG.AREA_BOUNDS;
+  const b = CONFIG.SEARCH_VIEWBOX;
   const params = new URLSearchParams({
     q,
     format: "jsonv2",

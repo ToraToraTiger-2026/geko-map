@@ -72,7 +72,7 @@ const MESSAGES = {
   posting_disabled: "現在、投稿の受け付けを一時停止しています。",
   queue_full: "混み合っているため、いまは受け付けできません。時間をおいてお試しください。",
   rate_limit: "投稿回数の上限に達しました。24時間ほどあけてお試しください。",
-  out_of_area: "現在は東京周辺のお店だけ登録できます。",
+  out_of_area: "現在は日本国内のお店だけ登録できます。",
   invalid_features: "特徴の選択が正しくありません。",
   invalid_target: "対象のお店が見つかりませんでした。",
   invalid_shop: "対象のお店が見つかりませんでした。",

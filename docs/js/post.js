@@ -69,7 +69,7 @@ function setPosition(latlng) {
   position = { lat: latlng.lat, lng: latlng.lng };
   $("pin-text").textContent = inArea(position)
     ? `ピンの位置：緯度 ${position.lat.toFixed(5)}、経度 ${position.lng.toFixed(5)}`
-    : "ピンが対象地域（東京周辺）の外にあります。";
+    : "ピンが対象地域（日本国内）の外にあります。";
   if (inArea(position)) updateNearby();
 }
 
@@ -116,7 +116,7 @@ bindSearch({
 /** 入力を確認して、問題があれば利用者向けの文を返す（最終的な検査はDB側でも行われる） */
 function validate(values) {
   if (!position) return "地図をタップして、お店の場所にピンを置いてください。";
-  if (!inArea(position)) return "現在は東京周辺のお店だけ登録できます。";
+  if (!inArea(position)) return "現在は日本国内のお店だけ登録できます。";
   if (!values.name) return "お店の名前を入力してください。";
   if (!values.address) return "住所を入力してください。";
   if (/[<>]/.test(values.name + values.address) || /https?:/i.test(values.name + values.address)) {

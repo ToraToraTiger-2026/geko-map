@@ -77,14 +77,14 @@ begin
       where created_by = auth.uid() and created_at > now() - interval '24 hours') >= 3 then
     raise exception 'rate_limit';
   end if;
-  -- 今は東京周辺だけ。全国に広げるときはここ（と region の決め方）を変える
-  if new.lat not between 35.3 and 36.0 or new.lng not between 138.9 and 140.0 then
+  -- 日本全域を含む長方形（docs/js/config.js の AREA_BOUNDS と同じ値にすること）
+  if new.lat not between 20.4 and 45.6 or new.lng not between 122.9 and 154.1 then
     raise exception 'out_of_area';
   end if;
 
   new.created_by  := auth.uid();
   new.status      := 'pending';
-  new.region      := 'tokyo';
+  new.region      := 'jp';
   new.created_at  := now();
   new.reviewed_at := null;
   return new;
