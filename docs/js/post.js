@@ -1,7 +1,7 @@
 // お店の登録画面。ピンの位置は、地図をタップするか、検索の候補を選んで決める。
 
 import { CONFIG, FEATURES } from "./config.js";
-import { createMap } from "./map.js";
+import { createMap, SEARCH_AREA_RADIUS_M } from "./map.js";
 import { bindSearch } from "./search-ui.js";
 import { el, isUuid } from "./util.js";
 import { ensureSignedIn } from "./anon-auth.js";
@@ -13,6 +13,7 @@ const $ = (id) => document.getElementById(id);
 const map = createMap("pick-map");
 let marker = null;
 let position = null; // { lat, lng }
+let searchArea = null; // 住所検索の範囲円
 let lookupToken = 0;
 let nearbyCount = 0;
 
@@ -87,6 +88,12 @@ map.on("click", (e) => placeMarker(e.latlng));
 
 // 検索で見つけた候補を選んだとき：ピンを立てて寄り、空欄の店名・住所だけ自動入力する（入力済みは上書きしない）
 function pickResult(r) {
+  // 住所の検索結果は位置が町名レベルなので、範囲円を添える（ピンは動かせるので、円の中で正確な位置に直す）
+  if (searchArea) searchArea.remove();
+  searchArea = null;
+  if (r.kind === "address") {
+    searchArea = L.circle([r.lat, r.lng], { radius: SEARCH_AREA_RADIUS_M, weight: 2, fillOpacity: 0.15, interactive: false }).addTo(map);
+  }
   placeMarker({ lat: r.lat, lng: r.lng });
   map.setView([r.lat, r.lng], 17);
   if (!$("f-name").value.trim()) $("f-name").value = r.name.slice(0, 60);
@@ -149,6 +156,8 @@ $("shop-form").addEventListener("submit", async (e) => {
     $("shop-form").reset();
     if (marker) map.removeLayer(marker);
     marker = null;
+    if (searchArea) searchArea.remove();
+    searchArea = null;
     position = null;
     nearbyCount = 0;
     $("nearby").hidden = true;

@@ -88,7 +88,7 @@ export function refreshMapSize() {
   map?.invalidateSize();
 }
 
-const SEARCH_AREA_RADIUS_M = 150;
+export const SEARCH_AREA_RADIUS_M = 150;
 let searchLayer = null;
 
 /** 検索でヒットした場所の目印。店名などはピン、住所は範囲円。次の検索で置き換わる */
