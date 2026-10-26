@@ -50,6 +50,7 @@ Turnstile のサイトキー・公開URL・運営者名が未設定なら知ら�
 - Supabase の Usage（使用量）と Logs（異常なアクセスが無いか）を見る。
 - Table Editor から `shops` / `reviews` / `reports` / `deletion_requests` を CSV でエクスポートして手元に保存（無料プランは自動バックアップが無い）。
 - `select public.cleanup_old_data();` は pg_cron で毎週自動実行している。動いているか `select * from cron.job_run_details order by start_time desc limit 5;` で確認。
+- cron-job.org の実行履歴で、最近の実行が成功（HTTP 200）していることを見る。失敗通知が来ないだけでは、ジョブの自動無効化や通知メールの不達に気づけない。
 - Leaflet / supabase-js に重大な脆弱性の報告が無いか確認する（更新は意図したときだけ手動）。
 
 ## Supabase が一時停止したときの復旧
