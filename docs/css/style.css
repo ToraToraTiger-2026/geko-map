@@ -62,7 +62,12 @@ a { color: var(--accent); }
   display: block; width: 100%; min-height: 44px; padding: 6px 10px; margin: 2px 0; text-align: left;
   border: 1px solid var(--border); border-radius: 6px; background: #fff; color: var(--fg); font: inherit; cursor: pointer;
 }
-.page .search-bar, .page .search-results { padding-left: 0; padding-right: 0; }
+/* 検索結果のピン（絵文字）。Leaflet 標準の白い四角は付けない */
+.search-pin { font-size: 28px; line-height: 30px; text-align: center; background: none; border: 0; }
+@media (max-width: 600px) {
+  .search-results { max-height: 22vh; } /* スマホでは地図を広く残す */
+}
+.page .search-bar,.page .search-results { padding-left: 0; padding-right: 0; }
 .page .status { padding-left: 0; padding-right: 0; }
 
 /* 地図上の現在地ボタン（Leaflet のズームボタンと同じ見た目の箱） */

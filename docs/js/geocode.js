@@ -1,5 +1,6 @@
 // 場所の検索。住所は国土地理院、店名などは OpenStreetMap の Nominatim に問い合わせる。
 // Nominatim の利用ポリシー：1秒に1リクエストまで／入力中の自動検索は禁止（呼ぶのはボタン押下かEnterのときだけ）。
+// 結果は { name, address, lat, lng, kind }。kind は "address"（住所：範囲として扱う）か "place"（店名など：ピン）。
 // 失敗は例外にせず、利用者向けの日本語メッセージで返す。
 
 import { CONFIG } from "./config.js";
@@ -36,7 +37,7 @@ export async function searchAddress(q) {
     .map((f) => {
       const [lng, lat] = f.geometry?.coordinates ?? [];
       const title = f.properties?.title ?? "";
-      return { name: title, address: title, lat: Number(lat), lng: Number(lng) };
+      return { name: title, address: title, lat: Number(lat), lng: Number(lng), kind: "address" };
     })
     .filter((r) => r.name && Number.isFinite(r.lat) && Number.isFinite(r.lng))
     .slice(0, MAX_RESULTS);
@@ -79,6 +80,7 @@ export async function searchPlace(q) {
         address,
         lat: Number(p.lat),
         lng: Number(p.lon),
+        kind: AREA_CATEGORIES.has(p.category) ? "address" : "place",
       };
     })
     .filter((r) => r.name && Number.isFinite(r.lat) && Number.isFinite(r.lng));
@@ -86,13 +88,17 @@ export async function searchPlace(q) {
 
 const PREFECTURE = /(都|道|府|県)/;
 const MUNICIPALITY = /(市|区|町|村|郡)/;
+const WARD_OR_CITY = /[^\s市区郡][市区郡]/; // 「新宿区」「渋谷区」など。「町田駅」のような駅名は含めない
 const ADDRESS_WORDS = /(丁目|番地|番|号|[0-9０-９]+\s*[-－ー−]\s*[0-9０-９]+)/;
 
 /** 入力が住所らしいか（数字、丁目・番地、都道府県・市区町村の語を含むか） */
 export function looksLikeAddress(q) {
-  if (/[0-9０-９]/.test(q) || ADDRESS_WORDS.test(q)) return true;
+  if (/[0-9０-９]/.test(q) || ADDRESS_WORDS.test(q) || WARD_OR_CITY.test(q)) return true;
   return PREFECTURE.test(q) && MUNICIPALITY.test(q);
 }
+
+// Nominatim が町名・道路・行政区域などを返したときは、ピンではなく範囲として扱う
+const AREA_CATEGORIES = new Set(["boundary", "place", "highway", "landuse"]);
 
 /**
  * 住所らしければ国土地理院、そうでなければ Nominatim。0件なら、もう一方も試す。

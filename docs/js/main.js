@@ -1,7 +1,7 @@
 import { CONFIG } from "./config.js";
 import { listShops } from "./data-source.js";
 import { renderFilterPanel, filterShops } from "./filters.js";
-import { initMap, showShops, openShop, flyToLocation, showCurrentLocation, addLocateControl } from "./map.js";
+import { initMap, showShops, openShop, flyToLocation, showCurrentLocation, addLocateControl, showSearchResult, refreshMapSize } from "./map.js";
 import { bindSearch } from "./search-ui.js";
 import { openReviewDialog, openReportDialog } from "./dialogs.js";
 import { isUuid } from "./util.js";
@@ -18,6 +18,7 @@ const searchResults = document.getElementById("search-results");
 /** 場所の検索（ボタン押下・Enterのときだけ）と、地図上の現在地ボタン */
 function setupLocationTools() {
   const goTo = (r) => {
+    showSearchResult(r);
     flyToLocation(r.lat, r.lng, 16);
     searchStatus.textContent = `${r.name}へ移動しました。`;
   };
@@ -29,6 +30,7 @@ function setupLocationTools() {
     list: searchResults,
     onResults: (results) => goTo(results[0]),
     onPick: goTo,
+    onListChange: refreshMapSize,
   });
 
   addLocateControl((button) => {

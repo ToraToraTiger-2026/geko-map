@@ -83,6 +83,31 @@ export function flyToLocation(lat, lng, zoom = 16) {
   map.flyTo([lat, lng], zoom);
 }
 
+/** 画面の中で地図の大きさが変わったとき（検索候補の出し入れなど）に呼ぶ */
+export function refreshMapSize() {
+  map?.invalidateSize();
+}
+
+const SEARCH_AREA_RADIUS_M = 150;
+let searchLayer = null;
+
+/** 検索でヒットした場所の目印。店名などはピン、住所は範囲円。次の検索で置き換わる */
+export function showSearchResult({ name, lat, lng, kind }) {
+  if (searchLayer) searchLayer.remove();
+  searchLayer = L.layerGroup().addTo(map);
+  if (kind === "address") {
+    L.circle([lat, lng], { radius: SEARCH_AREA_RADIUS_M, weight: 2, fillOpacity: 0.15, interactive: false }).addTo(searchLayer);
+  } else {
+    const icon = L.divIcon({
+      className: "search-pin",
+      html: el("span", { text: "📍" }),
+      iconSize: [30, 30],
+      iconAnchor: [15, 28],
+    });
+    L.marker([lat, lng], { icon, keyboard: false }).bindTooltip(el("span", { text: name })).addTo(searchLayer);
+  }
+}
+
 let locationLayer = null;
 
 /** 現在地の目印（円マーカー）を表示する。画像は使わない。位置は保存も送信もしない */
